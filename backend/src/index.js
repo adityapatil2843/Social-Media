@@ -1,22 +1,39 @@
-// index.js
-import express, { json } from 'express';
-import dotenv from 'dotenv';
-import connectDB from './db/index.js';
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import connectDB from "./db/index.js";
+import authRoutes from "./routes/auth.routes.js";
 
-dotenv.config({ path: './.env' });
+dotenv.config();
 
 const app = express();
-app.use(json());
 
-// step 1: connect to mongoDB
-const port = process.env.PORT || 9000;
+// Middlewares
+app.use(cors({
+  origin: "http://localhost:5173", // your frontend URL
+  credentials: true
+}));
 
-const startServer = async () => {
-  await connectDB();
+app.use(express.json());
+app.use(cookieParser());
 
-  app.listen(port, () => {
-    console.log(`🚀 Server is running on http://localhost:${port}`);
-  });
-};
+// Routes
+app.use("/api/auth", authRoutes);
 
-startServer();
+// Root route
+app.get("/", (req, res) => {
+  res.send("Server is running...");
+});
+
+// Start server + DB connection
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, async () => {
+  try {
+    await connectDB();
+    console.log(`🔥 Server running on port ${PORT}`);
+  } catch (err) {
+    console.error("❌ DB connection failed:", err);
+  }
+});
