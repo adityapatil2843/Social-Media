@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 });
 
 // Start server + DB connection
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 1234;
 
 app.listen(PORT, async () => {
   try {

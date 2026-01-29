@@ -13,25 +13,30 @@ import ChatBox from "./pages/ChatBox.jsx";
 import Connection from "./pages/Connection.jsx";
 import Discover from "./pages/Discover.jsx";
 import Profile from "./pages/Profile.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
+import {useUser} from '@clerk/clerk-react'
+import Layout  from "./pages/Layout.jsx";
 
 const App = () => {
+  const {user} = useUser()
+
   return (
     <>
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-
-        <Route path="/feed" element={<Feed />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/messages/:userId" element={<ChatBox />} />
-
-        <Route path="/connection" element={<Connection />} />
-        <Route path="/discover" element={<Discover />} />
-        <Route path="/profile" element={<Profile />} />
+        {/* Auth */}
+        <Route path="/" element={ !user ? <Login /> : <Layout/>}>
+              {/*<Route path="/signup" element={<Signup />} />*/}
+              <Route index element={<Feed />} />
+              <Route path="messages" element={<Messages />} />
+              <Route path="messages/:userId" element={<ChatBox />} />
+              <Route path="connection" element={<Connection />} />
+              <Route path="discover" element={<Discover />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="profile/:profileId" element={<Profile />} />
+              <Route path="create-post" element={<CreatePost />} />
+        </Route>
       </Routes>
 
       <Footer />

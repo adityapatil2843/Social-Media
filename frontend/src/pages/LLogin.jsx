@@ -1,9 +1,9 @@
 import React from "react";
 import { assets } from "../assets/assets.js";
 import { Star } from "lucide-react";
-import { SignIn } from '@clerk/clerk-react';
+import { SignIn } from "@clerk/clerk-react";
 
-const Login = () => {
+const LLogin = () => {
   return (
     <div className="relative min-h-screen flex flex-col md:flex-row">
       {/* Background Image */}
@@ -58,10 +58,10 @@ const Login = () => {
 
       {/* Right Section – Login */}
       <div className="flex-1 flex items-center justify-center p-6 sm:p-10">
-        <SignIn/>
+        <SignIn />
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LLogin;
